@@ -14,6 +14,7 @@
         :root {
             --teams-blue: #464eb7; /* Teams primary color */
             --teams-green: #0078d4; /* Teams button color / Microsoft Blue */
+            --teams-live: #17a2b8; /* Secondary button color */
             --light-bg: #f5f5f5;
             --card-bg: #ffffff;
             --text-color: #333;
@@ -100,7 +101,7 @@
             margin-bottom: 20px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            box-sizing: border-box; /* Include padding in width */
+            box-sizing: border-box; 
             font-size: 15px;
             transition: border-color 0.2s;
             background-color: #fafafa;
@@ -113,7 +114,17 @@
             box-shadow: 0 0 5px rgba(0, 120, 212, 0.2);
         }
 
-        /* Button Styling */
+        /* --- Button Alignment & Styling --- */
+
+        /* Wrapper for all buttons to ensure consistent spacing */
+        .button-wrapper {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Space between buttons */
+        }
+
+        /* Primary Button (Form Submit) */
         button[type="submit"] {
             width: 100%;
             padding: 15px;
@@ -128,11 +139,38 @@
         }
 
         button[type="submit"]:hover {
-            background-color: #005a9e; /* Darker shade on hover */
+            background-color: #005a9e;
         }
 
         button[type="submit"]:active {
             transform: scale(0.99);
+        }
+
+        /* Secondary Button (Table-based for alignment) */
+        .secondary-button-table {
+            width: 100%; /* Important: forces the table to take full width */
+            text-align: center;
+        }
+
+        .secondary-button-table a {
+            background: var(--teams-live);
+            border: 1px solid var(--teams-live);
+            /* Inherited styles for consistency */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 16px; 
+            line-height: 1.2; 
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 15px 24px; /* Matches primary button padding */
+            display: block; 
+            border-radius: 6px; 
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+
+        .secondary-button-table a:hover {
+            background: #0d8396;
+            border-color: #0d8396;
         }
     </style>
 </head>
@@ -166,24 +204,22 @@
                 <input type="text" id="subject" placeholder="e.g., Project Sync-up" required>
             </div>
             
-            <button type="submit">
-                Create Teams Meeting Invitation
-            </button>
+            <div class="button-wrapper">
+                <button type="submit">
+                    Create Teams Meeting Invitation
+                </button>
+
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" class="secondary-button-table">
+                    <tr>
+                        <td style="border-radius: 6px; background: var(--teams-live); text-align: center;">
+                            <a href="https://teams.live.com/meet/9347918289893?p=57ITT2ihPvJd6epLnU" target="_blank">
+                                <span style="margin-right: 8px;">&#x25B6;</span> Live Teams (Join Now)
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </form>
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-                            <tr>
-                                <td style="border-radius: 6px; background: #17a2b8; text-align: center;">
-                                    <a href="https://teams.live.com/meet/9347918289893?p=57ITT2ihPvJd6epLnU" target="_blank" style="
-                                        background: #17a2b8; border: 1px solid #17a2b8; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.2; 
-                                        color: #ffffff; text-align: center; text-decoration: none; padding: 12px 24px; display: block; 
-                                        border-radius: 6px; font-weight: bold;
-                                    ">
-                                        <span style="font-family: 'Font Awesome 6 Free', sans-serif; margin-right: 8px;">&#xf03d;</span>
-                                        Live Teams (Join Now)
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
     </div>
 
     <script>
@@ -214,11 +250,11 @@
                 const pad = (num) => String(num).padStart(2, '0');
                 
                 return date.getFullYear() + 
-                       pad(date.getMonth() + 1) + 
-                       pad(date.getDate()) + 
-                       'T' + 
-                       pad(date.getHours()) + 
-                       pad(date.getMinutes());
+                        pad(date.getMonth() + 1) + 
+                        pad(date.getDate()) + 
+                        'T' + 
+                        pad(date.getHours()) + 
+                        pad(date.getMinutes());
             };
 
             const formattedStart = formatTeamsDate(startDate);
